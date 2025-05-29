@@ -5,7 +5,7 @@ import openai
 
 # === CONFIG ===
 PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # Replace with your actual key
-OPENAI_API_KEY = "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"      # Replace with your actual key
+OPENAI_API_KEY = "openai"      # Replace with your actual key
 INDEX_NAME = "property-assistant"
 
 # === INIT ===
