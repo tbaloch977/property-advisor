@@ -1,18 +1,18 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
 from pinecone import Pinecone
-import openai
+from openai import OpenAI
 
 # === CONFIG ===
-PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # Replace with your actual key
-OPENAI_API_KEY = "openai"      # Replace with your actual key
+PINECONE_API_KEY = st.secrets["pinecone"]["api_key"]
+OPENAI_API_KEY = st.secrets["openai"]["api_key"]
 INDEX_NAME = "property-assistant"
 
 # === INIT ===
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(INDEX_NAME)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
-client = openai.OpenAI(api_key=OPENAI_API_KEY)
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # === UI ===
 st.set_page_config(page_title="Property Advisor", layout="centered")
@@ -67,6 +67,5 @@ Below are short transcripts from expert videos. First, give a clear answer. Then
 
         st.success("✅ Here's your answer:")
         st.markdown(gpt_response.choices[0].message.content)
-
     else:
         st.warning("No matching clips found. Try rephrasing your question.")
