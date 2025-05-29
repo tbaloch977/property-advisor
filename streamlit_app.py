@@ -1,6 +1,6 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
-from pinecone import Pinecone
+from pinecone import Pinecone, ServerlessSpec
 
 # ==== CONFIG ====
 PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # Replace with your key
