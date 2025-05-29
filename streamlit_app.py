@@ -1,26 +1,28 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
-from pinecone import Pinecone, ServerlessSpec
+import pinecone  # using legacy-compatible Pinecone SDK
 
 # ==== CONFIG ====
-PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # Replace with your key
-INDEX_NAME = "property-assistant"  # Replace with your index name
+PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # 🔁 Replace with your actual key
+INDEX_NAME = "property-assistant"  # 🔁 Replace if your index name differs
+PINECONE_ENV = "gcp-starter"
 
 # ==== INIT ====
-pc = Pinecone(api_key=PINECONE_API_KEY)
-index = pc.Index(INDEX_NAME)
+pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
+index = pinecone.Index(INDEX_NAME)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
+# ==== UI CONFIG ====
 st.set_page_config(page_title="Property Advisor", layout="centered")
 st.title("🏡 Property Advisor in Your Pocket")
-st.write("Ask any property question and get real video answers with timestamped YouTube links.")
+st.write("Ask any property question and get real video advice with timestamped YouTube clips.")
 
 # ==== INPUT ====
 question = st.text_input("💬 What would you like to know?", placeholder="e.g. What should I ask an estate agent?")
 
 # ==== SEARCH + DISPLAY ====
 if question:
-    with st.spinner("Searching expert clips..."):
+    with st.spinner("🔍 Searching expert clips..."):
         vector = embedder.encode(question).tolist()
         results = index.query(vector=vector, top_k=10, include_metadata=True)
 
@@ -42,6 +44,7 @@ if question:
                 break
 
     if responses:
+        st.success("✅ Here's what we found:")
         for i, (title, summary, url) in enumerate(responses, 1):
             st.markdown(f"### {i}. {title}")
             st.write(summary)
