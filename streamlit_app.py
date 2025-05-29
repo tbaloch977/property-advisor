@@ -65,7 +65,16 @@ Below are short transcripts from expert videos. First, give a clear answer. Then
                 max_tokens=500
             )
 
+    if responses:  
         st.success("✅ Here's your answer:")
         st.markdown(gpt_response.choices[0].message.content)
+
+        # Add a clear heading
+        st.markdown("### 📺 Watch the related clips:")
+
+        # Render real YouTube links from Pinecone results
+        for i, (_, _, url) in enumerate(responses, 1):
+        st.markdown(f"{i}. [Watch on YouTube]({url})")
+        
     else:
         st.warning("No matching clips found. Try rephrasing your question.")
