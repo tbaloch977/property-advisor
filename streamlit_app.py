@@ -1,14 +1,14 @@
-from pinecone import Pinecone
-from sentence_transformers import SentenceTransformer
 import streamlit as st
+from sentence_transformers import SentenceTransformer
+from pinecone import Pinecone
 
-# INIT
-pc = Pinecone(api_key="pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a")
-index = pc.Index("property-assistant")
+# === CONFIG ===
+PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"
+INDEX_NAME = "property-assistant"
 
-# ==== INIT ====
-pinecone.init(api_key=PINECONE_API_KEY, environment="gcp-starter")
-index = pinecone.Index(INDEX_NAME)
+# === INIT ===
+pc = Pinecone(api_key=PINECONE_API_KEY)
+index = pc.Index(INDEX_NAME)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
 # ==== UI ====
