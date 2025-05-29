@@ -45,6 +45,7 @@ if question:
                 break
 
     if responses:
+        # Build context for GPT
         context = "\n\n".join([f"{t}\n{text}" for t, text, _ in responses])
         prompt = f"""You are a helpful UK property advisor.
 The user asked: "{question}"
@@ -65,16 +66,13 @@ Below are short transcripts from expert videos. First, give a clear answer. Then
                 max_tokens=500
             )
 
-    if responses:  
         st.success("✅ Here's your answer:")
         st.markdown(gpt_response.choices[0].message.content)
 
-        # Add a clear heading
+        # Add real links below the GPT answer
         st.markdown("### 📺 Watch the related clips:")
-
-        # Render real YouTube links from Pinecone results
         for i, (_, _, url) in enumerate(responses, 1):
-        st.markdown(f"{i}. [Watch on YouTube]({url})")
-        
+            st.markdown(f"{i}. [Watch on YouTube]({url})")
+
     else:
         st.warning("No matching clips found. Try rephrasing your question.")
