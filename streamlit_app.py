@@ -1,18 +1,17 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
-import pinecone  # using legacy-compatible Pinecone SDK
+from pinecone import Pinecone  # ✅ NEW SDK import
 
 # ==== CONFIG ====
-PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # 🔁 Replace with your actual key
-INDEX_NAME = "property-assistant"  # 🔁 Replace if your index name differs
-PINECONE_ENV = "gcp-starter"
+PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # replace with yours
+INDEX_NAME = "property-assistant"
 
 # ==== INIT ====
-pinecone.init(api_key=PINECONE_API_KEY, environment=PINECONE_ENV)
-index = pinecone.Index(INDEX_NAME)
+pc = Pinecone(api_key=PINECONE_API_KEY)
+index = pc.Index(INDEX_NAME)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-# ==== UI CONFIG ====
+# ==== UI ====
 st.set_page_config(page_title="Property Advisor", layout="centered")
 st.title("🏡 Property Advisor in Your Pocket")
 st.write("Ask any property question and get real video advice with timestamped YouTube clips.")
