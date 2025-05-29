@@ -3,7 +3,7 @@ from sentence_transformers import SentenceTransformer
 import pinecone  # ✅ Works with old SDK on Streamlit Cloud
 
 # ==== CONFIG ====
-PINECONE_API_KEY = "your-api-key"
+PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"
 INDEX_NAME = "property-assistant"
 
 # ==== INIT ====
