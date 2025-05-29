@@ -1,14 +1,14 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
-from pinecone import Pinecone  # ✅ NEW SDK import
+import pinecone  # ✅ Works with old SDK on Streamlit Cloud
 
 # ==== CONFIG ====
-PINECONE_API_KEY = "pcsk_Z8vs3_GhRc642dA1H6jNoNLgWNqYdrjQjMJTnd1ibERHQkudAao6dvmQGzmDU3CWHs78a"  # replace with yours
+PINECONE_API_KEY = "your-api-key"
 INDEX_NAME = "property-assistant"
 
 # ==== INIT ====
-pc = Pinecone(api_key=PINECONE_API_KEY)
-index = pc.Index(INDEX_NAME)
+pinecone.init(api_key=PINECONE_API_KEY, environment="gcp-starter")
+index = pinecone.Index(INDEX_NAME)
 embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
 # ==== UI ====
